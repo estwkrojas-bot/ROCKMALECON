@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rock al Malecón: El Archivo Perdido</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Bebas+Neue&family=Barlow+Condensed:wght@400;600&family=Special+Elite&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===================== AUDIO PLAYER SIDEBAR ===================== -->
+  <aside class="audio-player" id="audioPlayer">
+    <div class="noise-overlay"></div>
+
+    <!-- Header -->
+    <div class="player-header">
+      <h3 class="player-title">Archivo Sonoro</h3>
+      <div class="accent-line" style="width:64px;margin-top:8px;"></div>
+    </div>
+
+    <!-- Cassette Visual -->
+    <div class="cassette-container">
+      <div class="cassette" id="cassetteBody">
+        <div class="cassette-window">
+          <div class="reel reel-left" id="reelLeft">
+            <div class="reel-center"></div>
+          </div>
+          <div class="reel reel-right" id="reelRight">
+            <div class="reel-center"></div>
+          </div>
+        </div>
+        <div class="cassette-label">
+          <p class="cassette-band" id="cassetteBand">Los Desaparecidos</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Track Info -->
+    <div class="track-info">
+      <p class="track-title" id="trackTitle">Ruido Urbano</p>
+      <p class="track-meta" id="trackMeta">Los Desaparecidos • 1987</p>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="ctrl-btn" id="prevBtn" title="Anterior">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" y1="19" x2="5" y2="5"></line></svg>
+      </button>
+      <button class="ctrl-btn play-btn" id="playBtn" title="Reproducir">
+        <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="display:none"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+      </button>
+      <button class="ctrl-btn" id="nextBtn" title="Siguiente">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="4" x2="19" y2="20"></line></svg>
+      </button>
+    </div>
+
+    <!-- Playlist Toggle -->
+    <div class="playlist-toggle">
+      <button class="playlist-btn" id="playlistBtn">
+        <span class="playlist-label">Lista</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <!-- Playlist Panel -->
+    <div class="playlist-panel" id="playlistPanel">
+      <div class="playlist-inner">
+        <div class="playlist-header-row">
+          <h3 class="playlist-header-title">Pistas</h3>
+          <button class="playlist-close" id="playlistClose">×</button>
+        </div>
+        <div class="playlist-tracks" id="playlistTracks"></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===================== MAIN CONTENT ===================== -->
+  <div class="main-content">
+
+    <!-- Navigation -->
+    <nav class="site-nav">
+      <div class="nav-links">
+        <button class="nav-link" onclick="scrollToSection('hero')">Hero</button>
+        <button class="nav-link" onclick="scrollToSection('problema')">Problema</button>
+        <button class="nav-link" onclick="scrollToSection('archivo-sonoro')">Archivo Sonoro</button>
+        <button class="nav-link" onclick="scrollToSection('archivo-posters')">Archivo Posters</button>
+        <button class="nav-link" onclick="scrollToSection('manifiesto')">Manifiesto</button>
+      </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section id="hero" class="section-hero">
+      <!-- Floating Cassettes -->
+      <div class="floating-cassettes" aria-hidden="true">
+        <div class="float-wrap" style="top:20%;left:15%;animation:float1 8s ease-in-out infinite;">
+          <div class="cassette-mini" style="transform:rotate(-5deg)"></div>
+        </div>
+        <div class="float-wrap" style="top:60%;right:20%;animation:float2 10s ease-in-out infinite;">
+          <div class="cassette-mini" style="transform:rotate(3deg)"></div>
+        </div>
+        <div class="float-wrap" style="top:40%;left:50%;animation:float3 12s ease-in-out infinite;">
+          <div class="cassette-mini" style="transform:rotate(-2deg)"></div>
+        </div>
+        <div class="float-wrap" style="top:70%;left:30%;animation:float4 9s ease-in-out infinite;">
+          <div class="cassette-mini" style="transform:rotate(4deg)"></div>
+        </div>
+      </div>
+
+      <!-- Noise Overlay -->
+      <div class="noise-overlay opacity-5"></div>
+      <!-- Scanlines -->
+      <div class="scanlines"></div>
+
+      <!-- Hero Content -->
+      <div class="hero-content">
+        <div class="accent-line mx-auto mb-8" style="width:128px;"></div>
+
+        <h1 class="hero-title">ROCK AL<br>MALECÓN</h1>
+
+        <div class="subtitle-wrap">
+          <div class="subtitle-bg"></div>
+          <p class="subtitle-text">EL ARCHIVO PERDIDO</p>
+        </div>
+
+        <div class="hero-desc">
+          <p class="hero-desc-text">
+            Cúcuta, Norte de Santander. Años 80 y 90.<br>
+            Un movimiento que desapareció sin dejar rastro digital.<br>
+            Este es su rescate.
+          </p>
+        </div>
+
+        <!-- Ambient Sound Toggle -->
+        <button class="ambient-btn" id="ambientBtn">
+          <svg id="volOffIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+          <svg id="volOnIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          <span id="ambientLabel">Sonido Ambiente Off</span>
+        </button>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div class="scroll-indicator">
+        <p class="scroll-text">Explorar</p>
+        <svg class="scroll-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+    </section>
+
+    <!-- ===== PROBLEMA SECTION ===== -->
+    <section id="problema" class="section-problema">
+      <div class="noise-overlay opacity-10"></div>
+      <div class="section-inner max-w-4xl">
+        <div>
+          <div class="accent-line mb-6" style="width:96px;"></div>
+          <h2 class="section-title white">EL PROBLEMA</h2>
+        </div>
+
+        <div class="blocks-stack">
+          <div class="block-accent-left">
+            <p class="block-text-lg white-dirty">
+              LAS BANDAS DE ROCK DEL MALECÓN DE CÚCUTA NO TIENEN RASTRO DIGITAL.
+              ESTÁN DESAPARECIENDO DE LA MEMORIA COLECTIVA.
+            </p>
+          </div>
+
+          <div class="block-dark">
+            <p class="block-text-md white-bone">
+              Durante los años 80 y 90, el Malecón de Cúcuta fue epicentro de un movimiento
+              de rock underground que nunca se documentó formalmente. Sin grabaciones
+              profesionales, sin fotografías de calidad, sin archivos digitales.
+            </p>
+          </div>
+
+          <div class="block-accent-left">
+            <p class="block-text-lg white-dirty">
+              SOLO QUEDAN CASETES ROTOS, POSTERS DESGASTADOS, Y MEMORIA FRAGMENTADA.
+            </p>
+          </div>
+
+          <div class="block-accent-border">
+            <p class="block-text-md white-bone">
+              Este archivo es un intento de rescate. Un esfuerzo por recuperar lo que aún
+              puede recuperarse antes de que desaparezca para siempre. No es completo.
+              No es perfecto. Pero es necesario.
+            </p>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <button class="btn-primary" onclick="scrollToSection('archivo-sonoro')">Explorar Audio</button>
+          <button class="btn-secondary" onclick="scrollToSection('archivo-posters')">Ver Posters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ARCHIVO SONORO SECTION ===== -->
+    <section id="archivo-sonoro" class="section-audio">
+      <div class="noise-overlay opacity-5"></div>
+      <div class="section-header px-8 mb-16">
+        <div class="accent-line mb-6" style="width:96px;"></div>
+        <h2 class="section-title black">ARCHIVO SONORO</h2>
+        <p class="section-subtitle dark">
+          Grabaciones rescatadas de casetes deteriorados. Calidad variable.
+          Autenticidad garantizada.
+        </p>
+      </div>
+
+      <div class="audio-grid" id="audioGrid"></div>
+    </section>
+
+    <!-- ===== ARCHIVO POSTERS SECTION ===== -->
+    <section id="archivo-posters" class="section-posters">
+      <div class="noise-overlay opacity-10"></div>
+      <div class="section-header px-8 mb-16">
+        <div class="accent-line mb-6" style="width:96px;"></div>
+        <h2 class="section-title white-dirty">ARCHIVO DE POSTERS</h2>
+        <p class="section-subtitle light">
+          Afiches recuperados de muros olvidados. Diseños hechos a mano.
+          Fotocopiados hasta el deterioro.
+        </p>
+      </div>
+
+      <div class="poster-grid" id="posterGrid"></div>
+    </section>
+
+    <!-- ===== MANIFIESTO SECTION ===== -->
+    <section id="manifiesto" class="section-manifiesto">
+      <div class="noise-overlay opacity-10"></div>
+      <div class="scanlines-light"></div>
+
+      <div class="manifesto-inner">
+        <div class="accent-line mx-auto mb-12" style="width:128px;"></div>
+        <h2 class="manifesto-title">MANIFIESTO</h2>
+
+        <div class="manifesto-texts">
+          <p class="manifesto-text-lg">LA MEMORIA NO ES UN DATO. ES UN ACTO DE RESISTENCIA.</p>
+          <div class="divider-line"></div>
+          <p class="manifesto-text-md">
+            El rock del Malecón nunca fue mainstream. Nunca tuvo presupuesto para grabaciones
+            profesionales. Nunca apareció en radio. Pero existió. Y su existencia merece ser
+            recordada, no porque fuera importante para la industria, sino porque fue
+            importante para quienes lo vivieron.
+          </p>
+          <div class="divider-line"></div>
+          <p class="manifesto-text-md">
+            Este archivo es incompleto. Siempre lo será. Pero es un punto de partida.
+            Una forma de decir: esto pasó. Estas bandas existieron. Esta música sonó
+            en estas calles.
+          </p>
+          <div class="divider-line"></div>
+          <p class="manifesto-text-lg">
+            SI TIENES CASETES, FOTOS, HISTORIAS, O RECUERDOS: COMPÁRTELOS.<br>
+            ESTE ARCHIVO ESTÁ VIVO.
+          </p>
+        </div>
+
+        <div class="manifesto-stamp">
+          <p class="stamp-text">
+            Investigación: Archivo Cultural Cúcuta<br>2026
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p class="footer-left">Rock al Malecón: El Archivo Perdido</p>
+      <p class="footer-right">Cúcuta, Norte de Santander</p>
+    </footer>
+
+  </div><!-- end main-content -->
+
+  <!-- Poster Modal -->
+  <div class="poster-modal" id="posterModal">
+    <button class="modal-close" id="modalClose">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <div class="modal-poster-wrap">
+      <div class="modal-poster" id="modalPoster">
+        <div class="noise-overlay opacity-20"></div>
+        <div class="modal-poster-content">
+          <div>
+            <div class="accent-line mb-6" style="height:8px;width:96px;"></div>
+            <h3 class="modal-band" id="modalBand"></h3>
+          </div>
+          <div class="modal-graphic">
+            <div class="graphic-outer">
+              <div class="graphic-inner"></div>
+              <div class="graphic-square"></div>
+            </div>
+          </div>
+          <div>
+            <p class="modal-venue" id="modalVenue"></p>
+            <p class="modal-year" id="modalYear"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
